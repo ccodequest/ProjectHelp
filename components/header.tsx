@@ -24,7 +24,7 @@ export function Header() {
         {/* Logo */}
         <Link href="/" className="flex-shrink-0 group">
           <Image 
-            src="/logo.jpg" 
+            src="/Logo.jpg" 
             alt="ProjectHelp Logo" 
             width={150} 
             height={150}
