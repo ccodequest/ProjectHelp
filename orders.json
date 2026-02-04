@@ -1,0 +1,18 @@
+[
+  {
+    "orderId": "PH-17702110315383FHOKWKL9K",
+    "customerName": "weewfvsvr",
+    "customerEmail": "harshvardhan.21.6361@gmail.com",
+    "customerPhone": "6361744165",
+    "projects": [
+      {
+        "id": "proj-001",
+        "name": "Sentiment Analysis using NLP",
+        "domain": "AI/ML"
+      }
+    ],
+    "message": "",
+    "createdAt": "2026-02-04T13:17:11.538Z",
+    "status": "pending"
+  }
+]
