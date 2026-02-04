@@ -219,7 +219,7 @@ export default function CheckoutPage() {
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  placeholder="John Doe"
+                  placeholder="Full Name"
                   required
                   className="rounded-lg border-2"
                 />
@@ -254,7 +254,7 @@ export default function CheckoutPage() {
                   name="phone"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  placeholder="+91 9845293201"
+                  placeholder="+91 9999999999"
                   required
                   className="rounded-lg border-2"
                 />
