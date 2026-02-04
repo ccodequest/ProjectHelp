@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useCart } from '@/lib/cart-context';
 import { ShoppingCart, MessageCircle, Menu, X, BookOpen, GraduationCap } from 'lucide-react';
 import { useState } from 'react';
@@ -21,21 +22,15 @@ export function Header() {
     <header className="sticky top-0 z-50 bg-white/98 backdrop-blur-md border-b border-gray-200 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 flex-shrink-0 group">
-          <div className="relative">
-            <div className="gradient-primary rounded-xl p-3 shadow-lg group-hover:shadow-xl transition-shadow">
-              <GraduationCap className="text-white" size={28} strokeWidth={2.5} />
-            </div>
-            <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
-          </div>
-          <div className="flex flex-col">
-            <span className="text-2xl font-extrabold gradient-primary bg-clip-text text-transparent tracking-tight">
-              ProjectHelp
-            </span>
-            <span className="text-xs text-gray-600 font-semibold uppercase tracking-wide">
-              Academic Solutions
-            </span>
-          </div>
+        <Link href="/" className="flex-shrink-0 group">
+          <Image 
+            src="/logo.jpg" 
+            alt="ProjectHelp Logo" 
+            width={150} 
+            height={150}
+            className="rounded-lg shadow-lg group-hover:shadow-xl transition-shadow"
+            priority
+          />
         </Link>
 
         {/* Desktop Navigation */}
