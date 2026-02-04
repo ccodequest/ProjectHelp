@@ -111,6 +111,53 @@ export default function MarketplacePage() {
           {/* Projects Grid */}
           {filteredProjects.length > 0 ? (
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {/* Featured Custom Project Card - Fixed at Start */}
+              <div className="sm:col-span-2 lg:col-span-3">
+                <div className="relative bg-gradient-to-br from-blue-50 to-indigo-100 rounded-lg border-2 border-primary overflow-hidden hover:shadow-xl transition-all group">
+                  <div className="absolute top-0 right-0 w-40 h-40 bg-primary/10 rounded-full -mr-20 -mt-20"></div>
+                  <div className="absolute bottom-0 left-0 w-32 h-32 bg-primary/5 rounded-full -ml-16 -mb-16"></div>
+                  
+                  <div className="relative p-8 md:p-10">
+                    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-3">
+                          <span className="inline-block px-4 py-1.5 bg-primary text-white text-xs font-bold rounded-full uppercase tracking-wide">
+                            ⭐ Featured
+                          </span>
+                          <span className="inline-block px-4 py-1.5 bg-yellow-300 text-yellow-900 text-xs font-bold rounded-full uppercase tracking-wide">
+                            Limited Time
+                          </span>
+                        </div>
+                        
+                        <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3 leading-tight">
+                          Custom Project Solutions
+                        </h2>
+                        
+                        <p className="text-base md:text-lg text-gray-700 mb-6 leading-relaxed">
+                          Get personalized, high-quality project solutions tailored to your specific requirements. Our expert team delivers custom implementations across all domains with guaranteed satisfaction.
+                        </p>
+                        
+                        <div className="flex flex-wrap gap-2 mb-6">
+                          <span className="px-3 py-1 bg-white/60 text-primary font-semibold text-sm rounded-lg">✓ 100% Customizable</span>
+                          <span className="px-3 py-1 bg-white/60 text-primary font-semibold text-sm rounded-lg">✓ Expert Support</span>
+                          <span className="px-3 py-1 bg-white/60 text-primary font-semibold text-sm rounded-lg">✓ On-time Delivery</span>
+                        </div>
+                        
+                        <Button className="gradient-primary text-white px-8 py-3 rounded-lg font-bold text-base hover:shadow-lg transition-all">
+                          Get Custom Quote
+                        </Button>
+                      </div>
+                      
+                      <div className="flex-shrink-0 md:w-32 text-center">
+                        <div className="text-6xl mb-2">🎯</div>
+                        <p className="text-sm font-semibold text-gray-700">Start Your Project Today</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Regular Projects */}
               {filteredProjects.map((project) => {
                 const isInCart = items.some((item) => item.project.id === project.id);
 
