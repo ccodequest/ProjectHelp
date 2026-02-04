@@ -1,13 +1,86 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { Header } from '@/components/header';
 import { Button } from '@/components/ui/button';
 import { ContactForm } from '@/components/contact-form';
 import { domains } from '@/lib/mock-data';
 import { CheckCircle2, ArrowRight, Star, Zap, Users, Award, Sparkles, Shield, Clock, Mail } from 'lucide-react';
 
+export const metadata: Metadata = {
+  title: 'Home - Premium Academic Projects with Expert Support',
+  description: 'Browse 500+ ready-made academic projects or get custom solutions. Complete source code, documentation, and 24/7 support. Expert quality by Ph.D. researchers. 99.8% success rate.',
+  openGraph: {
+    title: 'ProjectHelp - Premium Academic Projects with Expert Support',
+    description: 'Browse 500+ ready-made academic projects or get custom solutions. Complete source code, documentation, and 24/7 support.',
+    type: 'website',
+  },
+};
+
 export default function HomePage() {
+  const websiteStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'ProjectHelp',
+    url: 'https://projecthelp.in',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: 'https://projecthelp.in/marketplace?search={search_term_string}',
+      'query-input': 'required name=search_term_string',
+    },
+  };
+
+  const serviceStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    serviceType: 'Academic Project Solutions',
+    provider: {
+      '@type': 'Organization',
+      name: 'ProjectHelp',
+      url: 'https://projecthelp.in',
+    },
+    areaServed: 'Worldwide',
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Academic Projects',
+      itemListElement: [
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'AI/ML Projects',
+            description: 'Machine Learning and Artificial Intelligence project solutions',
+          },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Web Development Projects',
+            description: 'Full-stack web development project solutions',
+          },
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Custom Project Solutions',
+            description: 'Tailored academic project solutions with publication support',
+          },
+        },
+      ],
+    },
+  };
+
   return (
     <div className="min-h-screen bg-background">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteStructuredData) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceStructuredData) }}
+      />
       <Header />
 
       {/* Hero Section */}
@@ -255,7 +328,7 @@ export default function HomePage() {
             <div>
               <h4 className="font-bold text-white mb-4">Support</h4>
               <ul className="space-y-2 text-sm">
-                <li><a href="mailto:help@projecthelp.com" className="hover:text-white transition">Contact Us</a></li>
+                <li><a href="mailto:help@projecthelp.in" className="hover:text-white transition">Contact Us</a></li>
                 <li><a href="https://wa.me/919845293201" className="hover:text-white transition" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
                 <li><a href="tel:+918951216187" className="hover:text-white transition">+91 89512 16187</a></li>
                 <li><a href="tel:+919845293201" className="hover:text-white transition">+91 98452 93201</a></li>
