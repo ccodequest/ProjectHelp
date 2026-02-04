@@ -226,18 +226,6 @@ export default function AdminOrdersPage() {
     </div>
   );
 }
-
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        {/* Action Buttons */}
-        <div className="flex flex-wrap gap-3 mb-8">
-          <button
-            onClick={handleRefresh}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 font-medium"
-          >
-            <RefreshCw size={18} />
-            Refresh
-          </button>
-          <button
             onClick={handleExportJson}
             className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 font-medium"
           >

@@ -214,7 +214,7 @@ export default function MarketplacePage() {
               })}
             </div>
           ) : (
-            <div className="col-span-full text-center py-16">
+            <div className="text-center py-16">
               <div className="text-6xl mb-4">🔍</div>
               <p className="text-xl text-foreground font-semibold mb-2">No projects found</p>
               <p className="text-muted-foreground">Try adjusting your search or filters</p>
