@@ -52,11 +52,11 @@ export default function HomePage() {
             <Link href="#contact" className="w-full sm:w-auto">
               <Button 
                 size="lg" 
-                variant="outline" 
-                className="w-full sm:w-auto border-2 border-white text-white hover:bg-white hover:text-primary font-bold px-10 py-7 text-lg backdrop-blur-sm hover:scale-105 transition-all duration-300 rounded-xl h-auto"
+                className="w-full sm:w-auto bg-white text-primary hover:bg-white/90 hover:scale-105 font-bold px-10 py-7 text-lg shadow-2xl hover:shadow-3xl transition-all duration-300 rounded-xl h-auto"
               >
                 <Mail className="mr-2" size={24} />
                 Get in Touch
+                <ArrowRight className="ml-2" size={24} />
               </Button>
             </Link>
           </div>
@@ -132,7 +132,7 @@ export default function HomePage() {
             {[
               { title: 'Complete Source Code', items: ['Well-documented code', 'Industry best practices', 'Code comments and explanations', 'GitHub-ready format'] },
               { title: 'Comprehensive Documentation', items: ['Project reports', 'API documentation', 'Setup instructions', 'User guide'] },
-              { title: 'Academic Support', items: ['Research paper assistance', 'Publication support', 'Citation formatting', 'Plagiarism verification'] },
+              { title: 'Academic Support', items: ['Research paper assistance', 'Publication support with customizable titles', 'Citation formatting', 'Plagiarism verification'] },
               { title: 'Ongoing Support', items: ['Unlimited revisions', 'WhatsApp support', 'Email assistance', 'Technical guidance'] },
             ].map((service, i) => (
               <div key={i} className="bg-white rounded-xl p-8 border border-gray-200 hover:shadow-lg transition-shadow">
@@ -257,6 +257,8 @@ export default function HomePage() {
               <ul className="space-y-2 text-sm">
                 <li><a href="mailto:help@projecthelp.com" className="hover:text-white transition">Contact Us</a></li>
                 <li><a href="https://wa.me/919845293201" className="hover:text-white transition" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+                <li><a href="tel:+918951216187" className="hover:text-white transition">+91 89512 16187</a></li>
+                <li><a href="tel:+919845293201" className="hover:text-white transition">+91 98452 93201</a></li>
               </ul>
             </div>
             <div>

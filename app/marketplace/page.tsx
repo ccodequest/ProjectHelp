@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Header } from '@/components/header';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,10 +11,29 @@ import { useCart } from '@/lib/cart-context';
 import { Search, ShoppingCart, Check, X, Filter } from 'lucide-react';
 
 export default function MarketplacePage() {
+  const router = useRouter();
   const { addToCart, items, removeFromCart } = useCart();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedDomain, setSelectedDomain] = useState<string | null>(null);
   const [showFilters, setShowFilters] = useState(true);
+
+  const handleCustomProjectClick = () => {
+    const customProject = {
+      id: 'custom-project',
+      name: 'Custom Project Solutions',
+      domain: 'Other' as const,
+    };
+    
+    // Check if custom project is already in cart
+    const isAlreadyInCart = items.some((item) => item.project.id === 'custom-project');
+    
+    if (!isAlreadyInCart) {
+      addToCart(customProject);
+    }
+    
+    // Navigate to cart
+    router.push('/cart');
+  };
 
   const filteredProjects = useMemo(() => {
     return mockProjects.filter((project) => {
@@ -143,7 +163,10 @@ export default function MarketplacePage() {
                           <span className="px-3 py-1 bg-white/60 text-primary font-semibold text-sm rounded-lg">✓ On-time Delivery</span>
                         </div>
                         
-                        <Button className="gradient-primary text-white px-8 py-3 rounded-lg font-bold text-base hover:shadow-lg transition-all">
+                        <Button 
+                          onClick={handleCustomProjectClick}
+                          className="gradient-primary text-white px-8 py-3 rounded-lg font-bold text-base hover:shadow-lg transition-all"
+                        >
                           Get Custom Quote
                         </Button>
                       </div>
