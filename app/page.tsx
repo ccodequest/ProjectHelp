@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import { Header } from '@/components/header';
 import { Button } from '@/components/ui/button';
+import { ContactForm } from '@/components/contact-form';
 import { domains } from '@/lib/mock-data';
-import { CheckCircle2, ArrowRight, Star, Zap, Users, Award } from 'lucide-react';
+import { CheckCircle2, ArrowRight, Star, Zap, Users, Award, Sparkles, Shield, Clock, Mail } from 'lucide-react';
 
 export default function HomePage() {
   return (
@@ -10,55 +11,69 @@ export default function HomePage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="relative gradient-primary text-primary-foreground py-20 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-10 left-10 w-40 h-40 rounded-full bg-white/10 blur-3xl"></div>
-          <div className="absolute bottom-20 right-20 w-60 h-60 rounded-full bg-white/10 blur-3xl"></div>
+      <section className="relative gradient-primary text-primary-foreground py-24 md:py-36 overflow-hidden">
+        {/* Animated Background */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-10 left-10 w-72 h-72 rounded-full bg-white/20 blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-20 right-20 w-96 h-96 rounded-full bg-white/20 blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute top-1/2 left-1/2 w-64 h-64 rounded-full bg-white/10 blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
         </div>
 
-        <div className="max-w-5xl mx-auto px-4 text-center relative z-10">
-          <div className="inline-block mb-6 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full">
-            <p className="text-sm font-semibold text-primary-foreground flex items-center gap-2">
-              <Star size={16} className="fill-white" />
-              Trusted by 1000+ students
-            </p>
+        <div className="max-w-6xl mx-auto px-4 text-center relative z-10">
+          {/* Trust Badge */}
+          <div className="inline-flex items-center gap-3 mb-8 px-6 py-3 bg-white/20 backdrop-blur-md rounded-full border border-white/30 shadow-lg">
+            <Star size={20} className="fill-white animate-pulse" />
+            <span className="text-base font-bold text-white">Trusted by 1000+ Students Worldwide</span>
+            <Shield size={20} className="text-white" />
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 text-balance leading-tight">
-            Professional Academic Projects, Delivered Right
+          {/* Main Heading */}
+          <h1 className="text-6xl md:text-8xl font-extrabold mb-8 text-balance leading-tight tracking-tight">
+            <span className="block mb-2">ProjectHelp</span>
+            <span className="block text-4xl md:text-5xl font-semibold text-white/90">Premium Academic Projects</span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-primary-foreground/90 mb-8 text-balance max-w-3xl mx-auto">
-            Get expertly crafted academic projects with complete documentation, backed by research scientists and industry professionals.
+          <p className="text-xl md:text-3xl text-white font-medium mb-12 text-balance max-w-4xl mx-auto leading-relaxed">
+            Get expertly crafted academic projects with complete source code, documentation, and 24/7 support
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <Link href="/marketplace">
-              <Button size="lg" className="bg-white text-primary hover:bg-white/90 font-semibold px-8 text-base shadow-lg hover:shadow-xl transition-all">
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-5 justify-center mb-16">
+            <Link href="/marketplace" className="w-full sm:w-auto">
+              <Button 
+                size="lg" 
+                className="w-full sm:w-auto bg-white text-primary hover:bg-white/90 hover:scale-105 font-bold px-10 py-7 text-lg shadow-2xl hover:shadow-3xl transition-all duration-300 rounded-xl h-auto"
+              >
+                <Sparkles className="mr-2" size={24} />
                 Browse Projects
-                <ArrowRight className="ml-2" size={20} />
+                <ArrowRight className="ml-2" size={24} />
               </Button>
             </Link>
-            <Link href="/how-it-works">
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 font-semibold px-8 text-base">
-                Learn More
+            <Link href="#contact" className="w-full sm:w-auto">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="w-full sm:w-auto border-2 border-white text-white hover:bg-white hover:text-primary font-bold px-10 py-7 text-lg backdrop-blur-sm hover:scale-105 transition-all duration-300 rounded-xl h-auto"
+              >
+                <Mail className="mr-2" size={24} />
+                Get in Touch
               </Button>
             </Link>
           </div>
 
           {/* Stats */}
-          <div className="grid sm:grid-cols-3 gap-6 max-w-2xl mx-auto">
-            <div>
-              <p className="text-3xl md:text-4xl font-bold">500+</p>
-              <p className="text-primary-foreground/80 text-sm mt-1">Projects Available</p>
+          <div className="grid sm:grid-cols-3 gap-8 max-w-3xl mx-auto">
+            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
+              <p className="text-5xl md:text-6xl font-extrabold">500+</p>
+              <p className="text-white/90 text-base mt-2 font-medium">Projects Available</p>
             </div>
-            <div>
-              <p className="text-3xl md:text-4xl font-bold">50+</p>
-              <p className="text-primary-foreground/80 text-sm mt-1">Expert Developers</p>
+            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
+              <p className="text-5xl md:text-6xl font-extrabold">50+</p>
+              <p className="text-white/90 text-base mt-2 font-medium">Expert Developers</p>
             </div>
-            <div>
-              <p className="text-3xl md:text-4xl font-bold">99.8%</p>
-              <p className="text-primary-foreground/80 text-sm mt-1">Success Rate</p>
+            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
+              <p className="text-5xl md:text-6xl font-extrabold">99.8%</p>
+              <p className="text-white/90 text-base mt-2 font-medium">Success Rate</p>
             </div>
           </div>
         </div>
@@ -192,12 +207,32 @@ export default function HomePage() {
           <p className="text-xl text-primary-foreground/90 mb-8 text-balance">
             Join thousands of students who've successfully completed their academic projects with us.
           </p>
-          <Link href="/marketplace">
-            <Button size="lg" className="bg-white text-primary hover:bg-white/90 font-semibold px-8">
+          <Link href="/marketplace" className="inline-block">
+            <Button 
+              size="lg" 
+              className="bg-white text-primary hover:bg-white/90 hover:scale-105 font-bold px-10 py-6 text-lg shadow-2xl transition-all duration-300 rounded-xl h-auto"
+            >
+              <Sparkles className="mr-2" size={22} />
               View Marketplace
-              <ArrowRight className="ml-2" size={20} />
+              <ArrowRight className="ml-2" size={22} />
             </Button>
           </Link>
+        </div>
+      </section>
+
+      {/* Contact Form Section */}
+      <section id="contact" className="py-16 md:py-20 px-4 bg-gradient-to-br from-gray-50 to-blue-50">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">Have a Question?</h2>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+              Get in touch with us and we'll respond within 24 hours
+            </p>
+          </div>
+
+          <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12 border border-gray-200">
+            <ContactForm />
+          </div>
         </div>
       </section>
 

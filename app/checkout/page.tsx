@@ -8,12 +8,18 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useCart } from '@/lib/cart-context';
-import { generateWhatsAppMessage, generateEmailMessage, generateWhatsAppLink, copyToClipboard } from '@/lib/message-generator';
-import { generateOrderId, saveOrder } from '@/lib/order-storage';
+import { generateWhatsAppMessage, generateWhatsAppLink, copyToClipboard } from '@/lib/message-generator';
 import { ArrowLeft, Mail, MessageCircle, Loader, AlertCircle, CheckCircle } from 'lucide-react';
 
 const WHATSAPP_NUMBER = '+919845293201';
-const WEB3FORMS_KEY = 'c39053a3-c76f-4008-aa99-557d788d7a87';
+
+// Generate unique order ID with timestamp and random string
+function generateUniqueOrderId(): string {
+  const timestamp = Date.now();
+  const random = Math.random().toString(36).substring(2, 12).toUpperCase();
+  const uniqueId = `${timestamp}${random}`;
+  return `PH-${uniqueId}`;
+}
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -101,8 +107,10 @@ export default function CheckoutPage() {
     setIsSubmitting(true);
 
     try {
-      const orderId = generateOrderId();
+      // Generate unique order ID
+      const orderId = generateUniqueOrderId();
 
+      // Prepare order data
       const orderData = {
         orderId,
         customerName: formData.name.trim(),
@@ -116,51 +124,26 @@ export default function CheckoutPage() {
         message: formData.message.trim(),
         createdAt: new Date().toISOString(),
         status: 'pending' as const,
-        emailSent: false,
       };
 
-      // Save to localStorage first
-      saveOrder(orderData);
+      // Save order to JSON file via API
+      const saveResponse = await fetch('/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData),
+      });
 
-      // Generate messages
-      const whatsappMessage = generateWhatsAppMessage(orderData);
-      const emailMessage = generateEmailMessage(orderData);
-
-      // Send email via Web3Forms with proper error handling
-      let emailSent = false;
-      try {
-        const emailPayload = {
-          access_key: WEB3FORMS_KEY,
-          from_name: formData.name.trim(),
-          email: formData.email.trim(),
-          phone: formData.phone.trim(),
-          subject: `ProjectHelp - Quotation Request ${orderId}`,
-          message: emailMessage,
-          redirect: '',
-        };
-
-        const emailResponse = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-          },
-          body: JSON.stringify(emailPayload),
-        });
-
-        const emailResult = await emailResponse.json();
-        
-        if (emailResult.success === true) {
-          emailSent = true;
-          orderData.emailSent = true;
-          orderData.emailSentAt = new Date().toISOString();
-          saveOrder(orderData);
-        } else {
-          console.warn('Email service returned error:', emailResult.message);
-        }
-      } catch (emailError) {
-        console.error('Email sending error:', emailError);
+      if (!saveResponse.ok) {
+        throw new Error('Failed to save order');
       }
+
+      const saveResult = await saveResponse.json();
+      console.log('Order saved successfully:', saveResult);
+
+      // Generate WhatsApp message
+      const whatsappMessage = generateWhatsAppMessage(orderData);
 
       // Copy WhatsApp message to clipboard
       try {
@@ -169,7 +152,7 @@ export default function CheckoutPage() {
         console.warn('Could not copy to clipboard');
       }
 
-      // Clear cart and navigate
+      // Clear cart
       clearCart();
 
       // Open WhatsApp with the message
@@ -257,7 +240,7 @@ export default function CheckoutPage() {
                   required
                   className="rounded-lg border-2"
                 />
-                <p className="text-xs text-muted-foreground mt-1">We'll send quotations and order confirmation to this email</p>
+                <p className="text-xs text-muted-foreground mt-1">We'll contact you regarding your order</p>
               </div>
 
               {/* Phone */}
@@ -314,7 +297,7 @@ export default function CheckoutPage() {
               </Button>
 
               <p className="text-xs text-muted-foreground text-center">
-                By submitting, you agree to receive emails about your quotation request
+                By submitting, you agree to be contacted regarding your quotation request
               </p>
             </div>
           </form>
@@ -351,7 +334,7 @@ export default function CheckoutPage() {
                 <ul className="space-y-2 text-xs text-muted-foreground">
                   <li className="flex items-start gap-2">
                     <span className="text-green-600 font-bold">✓</span>
-                    <span>Email confirmation sent</span>
+                    <span>Order saved securely</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-green-600 font-bold">✓</span>
@@ -363,7 +346,7 @@ export default function CheckoutPage() {
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-green-600 font-bold">✓</span>
-                    <span>Quick project kickoff</span>
+                    <span>Quick project delivery</span>
                   </li>
                 </ul>
               </div>

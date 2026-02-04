@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useCart } from '@/lib/cart-context';
-import { ShoppingCart, MessageCircle, Menu, X } from 'lucide-react';
+import { ShoppingCart, MessageCircle, Menu, X, BookOpen, GraduationCap } from 'lucide-react';
 import { useState } from 'react';
 
 const WHATSAPP_NUMBER = '+919845293201';
@@ -18,18 +18,23 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+    <header className="sticky top-0 z-50 bg-white/98 backdrop-blur-md border-b border-gray-200 shadow-lg">
+      <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 flex-shrink-0">
-          <div className="flex items-center gap-2">
-            <div className="gradient-primary rounded-lg p-2">
-              <span className="text-xl font-bold">📚</span>
+        <Link href="/" className="flex items-center gap-3 flex-shrink-0 group">
+          <div className="relative">
+            <div className="gradient-primary rounded-xl p-3 shadow-lg group-hover:shadow-xl transition-shadow">
+              <GraduationCap className="text-white" size={28} strokeWidth={2.5} />
             </div>
-            <div className="hidden sm:flex flex-col">
-              <span className="text-xs font-bold text-gray-600 uppercase tracking-wider">ProjectHelp</span>
-              <span className="text-sm font-bold gradient-primary bg-clip-text text-transparent">Academic Projects</span>
-            </div>
+            <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-2xl font-extrabold gradient-primary bg-clip-text text-transparent tracking-tight">
+              ProjectHelp
+            </span>
+            <span className="text-xs text-gray-600 font-semibold uppercase tracking-wide">
+              Academic Solutions
+            </span>
           </div>
         </Link>
 
@@ -37,48 +42,49 @@ export function Header() {
         <nav className="hidden md:flex items-center gap-8 flex-1 ml-12">
           <Link
             href="/"
-            className="text-gray-700 hover:text-primary font-medium text-sm transition-colors relative group"
+            className="text-gray-700 hover:text-primary font-semibold text-base transition-colors relative group"
           >
             Home
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 gradient-primary group-hover:w-full transition-all duration-300"></span>
+            <span className="absolute -bottom-1 left-0 w-0 h-1 gradient-primary rounded-full group-hover:w-full transition-all duration-300"></span>
           </Link>
           <Link
             href="/marketplace"
-            className="text-gray-700 hover:text-primary font-medium text-sm transition-colors relative group"
+            className="text-gray-700 hover:text-primary font-semibold text-base transition-colors relative group"
           >
             Marketplace
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 gradient-primary group-hover:w-full transition-all duration-300"></span>
+            <span className="absolute -bottom-1 left-0 w-0 h-1 gradient-primary rounded-full group-hover:w-full transition-all duration-300"></span>
           </Link>
           <Link
             href="/how-it-works"
-            className="text-gray-700 hover:text-primary font-medium text-sm transition-colors relative group"
+            className="text-gray-700 hover:text-primary font-semibold text-base transition-colors relative group"
           >
             How It Works
-            <span className="absolute bottom-0 left-0 w-0 h-0.5 gradient-primary group-hover:w-full transition-all duration-300"></span>
+            <span className="absolute -bottom-1 left-0 w-0 h-1 gradient-primary rounded-full group-hover:w-full transition-all duration-300"></span>
           </Link>
         </nav>
 
         {/* Right Side Actions */}
-        <div className="flex items-center gap-2 md:gap-3">
+        <div className="flex items-center gap-3">
           <button
             onClick={openWhatsApp}
-            className="hidden sm:flex items-center gap-2 px-3 md:px-4 py-2.5 rounded-full bg-green-500 hover:bg-green-600 text-white transition-all hover:scale-105 font-medium text-sm shadow-md hover:shadow-lg"
+            className="hidden sm:flex items-center gap-2 px-5 py-3 rounded-xl bg-green-500 hover:bg-green-600 text-white transition-all hover:scale-105 font-bold text-base shadow-lg hover:shadow-xl"
             aria-label="Contact on WhatsApp"
             title="Chat with us on WhatsApp"
           >
-            <MessageCircle size={18} />
-            <span className="hidden md:inline">WhatsApp</span>
+            <MessageCircle size={20} strokeWidth={2.5} />
+            <span>WhatsApp</span>
           </button>
 
           <Link
             href="/cart"
-            className="relative flex items-center justify-center gap-2 px-3 md:px-4 py-2.5 rounded-full gradient-primary text-white hover:shadow-lg transition-all hover:scale-105 font-medium text-sm shadow-md"
+            className="relative flex items-center justify-center gap-2 px-5 py-3 rounded-xl gradient-primary text-white hover:shadow-xl transition-all hover:scale-105 font-bold text-base shadow-lg"
             aria-label={`Shopping cart with ${items.length} items`}
             title="View shopping cart"
           >
-            <ShoppingCart size={20} />
+            <ShoppingCart size={20} strokeWidth={2.5} />
+            <span className="hidden sm:inline">Cart</span>
             {items.length > 0 && (
-              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-md animate-pulse">
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold min-w-[24px] h-6 px-1.5 rounded-full flex items-center justify-center shadow-lg animate-pulse border-2 border-white">
                 {items.length > 9 ? '9+' : items.length}
               </span>
             )}
@@ -97,25 +103,25 @@ export function Header() {
 
       {/* Mobile Navigation */}
       {isMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-200 px-4 py-4 space-y-3">
+        <div className="md:hidden bg-white border-t border-gray-200 px-4 py-6 space-y-4 shadow-lg">
           <Link
             href="/"
             onClick={() => setIsMenuOpen(false)}
-            className="block py-2 text-gray-700 hover:text-primary font-medium transition-colors"
+            className="block py-3 px-4 text-gray-700 hover:text-primary hover:bg-gray-50 font-semibold transition-colors rounded-lg text-base"
           >
             Home
           </Link>
           <Link
             href="/marketplace"
             onClick={() => setIsMenuOpen(false)}
-            className="block py-2 text-gray-700 hover:text-primary font-medium transition-colors"
+            className="block py-3 px-4 text-gray-700 hover:text-primary hover:bg-gray-50 font-semibold transition-colors rounded-lg text-base"
           >
             Marketplace
           </Link>
           <Link
             href="/how-it-works"
             onClick={() => setIsMenuOpen(false)}
-            className="block py-2 text-gray-700 hover:text-primary font-medium transition-colors"
+            className="block py-3 px-4 text-gray-700 hover:text-primary hover:bg-gray-50 font-semibold transition-colors rounded-lg text-base"
           >
             How It Works
           </Link>
@@ -124,9 +130,9 @@ export function Header() {
               openWhatsApp();
               setIsMenuOpen(false);
             }}
-            className="w-full py-2 px-4 bg-green-500 text-white rounded-lg font-medium hover:bg-green-600 transition-colors flex items-center justify-center gap-2"
+            className="w-full py-3 px-5 bg-green-500 text-white rounded-xl font-bold hover:bg-green-600 transition-colors flex items-center justify-center gap-2 shadow-lg text-base"
           >
-            <MessageCircle size={18} />
+            <MessageCircle size={20} />
             WhatsApp
           </button>
         </div>
