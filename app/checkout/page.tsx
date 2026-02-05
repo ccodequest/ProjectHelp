@@ -145,6 +145,34 @@ export default function CheckoutPage() {
       // Generate WhatsApp message
       const whatsappMessage = generateWhatsAppMessage(orderData);
 
+      // Send email notification to backend/admin using Web3Forms
+      try {
+        const emailResponse = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            access_key: 'c39053a3-c76f-4008-aa99-557d788d7a87',
+            subject: `New Order - ${orderId}`,
+            name: formData.name.trim(),
+            email: formData.email.trim(),
+            message: whatsappMessage, // Use the same format as WhatsApp message
+          }),
+        });
+
+        const emailResult = await emailResponse.json();
+        
+        if (emailResult.success) {
+          console.log('Email notification sent successfully');
+        } else {
+          console.error('Failed to send email notification:', emailResult);
+        }
+      } catch (emailError) {
+        // Log error but don't stop the order process
+        console.error('Error sending email notification:', emailError);
+      }
+
       // Copy WhatsApp message to clipboard
       try {
         await copyToClipboard(whatsappMessage);

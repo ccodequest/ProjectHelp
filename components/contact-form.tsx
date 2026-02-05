@@ -36,11 +36,11 @@ export function ContactForm() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY || 'c39053a3-c76f-4008-aa99-557d788d7a87',
+          access_key: 'c39053a3-c76f-4008-aa99-557d788d7a87',
+          subject: 'ProjectHelp - New Contact Query',
           name: formData.name,
           email: formData.email,
           message: formData.message,
-          subject: 'ProjectHelp - New Contact Query',
         }),
       });
 
