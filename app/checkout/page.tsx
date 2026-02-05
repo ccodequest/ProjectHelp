@@ -153,7 +153,7 @@ export default function CheckoutPage() {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            access_key: 'c39053a3-c76f-4008-aa99-557d788d7a87',
+            access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY || 'c39053a3-c76f-4008-aa99-557d788d7a87',
             subject: `New Order - ${orderId}`,
             name: formData.name.trim(),
             email: formData.email.trim(),
