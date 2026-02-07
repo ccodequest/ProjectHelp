@@ -7,11 +7,15 @@ import { Header } from '@/components/header';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { StickmanLoader } from '@/components/ui/stickman-loader';
 import { useCart } from '@/lib/cart-context';
-import { generateWhatsAppMessage, generateWhatsAppLink, copyToClipboard } from '@/lib/message-generator';
-import { ArrowLeft, Mail, MessageCircle, Loader, AlertCircle, CheckCircle } from 'lucide-react';
+import { generateWhatsAppMessage, generateWhatsAppLink, copyToClipboard, generateEmailMessage } from '@/lib/message-generator';
+import { saveOrder } from '@/lib/order-storage';
+import { ArrowLeft, Mail, MessageCircle, AlertCircle, CheckCircle } from 'lucide-react';
 
 const WHATSAPP_NUMBER = '+919845293201';
+const WEB3FORMS_KEY = 'c39053a3-c76f-4008-aa99-557d788d7a87';
+const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
 
 // Generate unique order ID with timestamp and random string
 function generateUniqueOrderId(): string {
@@ -78,6 +82,8 @@ export default function CheckoutPage() {
     e.preventDefault();
     setErrorMessage('');
 
+    const whatsappWindow = window.open('about:blank', '_blank');
+
     // Validation
     if (!formData.name.trim()) {
       setErrorMessage('Please enter your full name');
@@ -142,6 +148,62 @@ export default function CheckoutPage() {
       const saveResult = await saveResponse.json();
       console.log('Order saved successfully:', saveResult);
 
+      // Send confirmation email (non-blocking if it fails)
+      let emailSent = false;
+      let emailSentAt: string | undefined;
+
+      if (WEB3FORMS_KEY) {
+        try {
+          const emailMessage = generateEmailMessage({
+            orderId: orderData.orderId,
+            customerName: orderData.customerName,
+            customerEmail: orderData.customerEmail,
+            customerPhone: orderData.customerPhone,
+            projects: orderData.projects.map((proj) => ({
+              name: proj.name,
+              domain: proj.domain,
+            })),
+            message: orderData.message,
+          });
+
+          const emailResponse = await fetch(WEB3FORMS_ENDPOINT, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              access_key: WEB3FORMS_KEY,
+              name: orderData.customerName,
+              from_name: orderData.customerName,
+              email: orderData.customerEmail,
+              phone: orderData.customerPhone,
+              subject: `ProjectHelp - Quotation Request ${orderData.orderId}`,
+              message: emailMessage,
+              redirect: '',
+            }),
+          });
+
+          const emailResult = await emailResponse.json();
+          if (emailResponse.ok && emailResult?.success) {
+            emailSent = true;
+            emailSentAt = new Date().toISOString();
+          } else {
+            console.warn('Email sending failed:', emailResult);
+          }
+        } catch (error) {
+          console.warn('Email sending error:', error);
+        }
+      } else {
+        console.warn('Missing NEXT_PUBLIC_WEB3FORMS_KEY. Skipping email send.');
+      }
+
+      // Save order to localStorage for success page
+      saveOrder({
+        ...orderData,
+        emailSent,
+        emailSentAt,
+      });
+
       // Generate WhatsApp message
       const whatsappMessage = generateWhatsAppMessage(orderData);
 
@@ -186,7 +248,11 @@ export default function CheckoutPage() {
       // Open WhatsApp with the message
       setTimeout(() => {
         const whatsappLink = generateWhatsAppLink(WHATSAPP_NUMBER, whatsappMessage);
-        window.open(whatsappLink, '_blank');
+        if (whatsappWindow) {
+          whatsappWindow.location.href = whatsappLink;
+        } else {
+          window.open(whatsappLink, '_blank');
+        }
       }, 300);
 
       // Navigate to success page
@@ -305,6 +371,7 @@ export default function CheckoutPage() {
                 />
               </div>
 
+
               {/* Submit Button */}
               <Button
                 type="submit"
@@ -313,7 +380,7 @@ export default function CheckoutPage() {
               >
                 {isSubmitting ? (
                   <>
-                    <Loader size={20} className="animate-spin" />
+                    <StickmanLoader size={20} className="text-white" />
                     Processing your request...
                   </>
                 ) : (

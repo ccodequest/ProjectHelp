@@ -259,7 +259,7 @@ export default function HomePage() {
           <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-12">Featured Domains</h2>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {domains.slice(0, 8).map((domain) => (
+            {domains.map((domain) => (
               <Link key={domain} href={`/marketplace?domain=${domain}`}>
                 <div className="bg-white rounded-lg p-6 border border-blue-100 hover:shadow-md hover:border-primary transition-all cursor-pointer text-center">
                   <h3 className="font-semibold text-foreground text-lg">{domain}</h3>

@@ -19,6 +19,8 @@ export interface Order {
   message: string;
   createdAt: string;
   status: 'pending' | 'quoted' | 'confirmed' | 'completed';
+  emailSent?: boolean;
+  emailSentAt?: string;
 }
 
 /**
@@ -128,6 +130,8 @@ export function clearAllOrders(): void {
  */
 export function formatOrderForDisplay(order: Order): string {
   const projectsList = order.projects.map((p) => `• ${p.name} (${p.domain})`).join('\n');
+  const emailStatus = order.emailSent ? 'SENT' : 'NOT SENT';
+  const emailSentAt = order.emailSentAt ? new Date(order.emailSentAt).toLocaleString() : 'N/A';
 
   return `
 Order ID: ${order.orderId}
@@ -141,6 +145,8 @@ ${projectsList}
 Message: ${order.message}
 
 Status: ${order.status.toUpperCase()}
+Email: ${emailStatus}
+Email Sent At: ${emailSentAt}
 Created: ${new Date(order.createdAt).toLocaleString()}
   `.trim();
 }

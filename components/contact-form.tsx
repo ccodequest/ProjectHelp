@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Mail, Loader, CheckCircle, AlertCircle } from 'lucide-react';
+import { StickmanLoader } from '@/components/ui/stickman-loader';
+import { Mail, CheckCircle, AlertCircle } from 'lucide-react';
 
 export function ContactForm() {
   const [formData, setFormData] = useState({
@@ -132,7 +133,7 @@ export function ContactForm() {
       >
         {isSubmitting ? (
           <>
-            <Loader size={20} className="animate-spin" />
+            <StickmanLoader size={20} className="text-white" />
             Sending...
           </>
         ) : (
