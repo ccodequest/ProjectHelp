@@ -142,16 +142,26 @@ function SuccessContent() {
 
               {/* Email Status */}
               <div className="border-t border-gray-200 pt-6">
-                <div className="flex items-start gap-3 p-4 bg-green-50 rounded-lg border border-green-100">
-                  <CheckCircle2 className="text-green-600 flex-shrink-0 mt-0.5" size={20} />
-                  <div>
-                    <p className="font-semibold text-green-800">Confirmation Email Sent</p>
-                    <p className="text-xs text-green-700 mt-1">We've sent details to {orderData.customerEmail}</p>
-                    {orderData.emailSentAt && (
-                      <p className="text-xs text-green-700 mt-2">Sent at: {new Date(orderData.emailSentAt).toLocaleString()}</p>
-                    )}
+                {orderData.emailSent ? (
+                  <div className="flex items-start gap-3 p-4 bg-green-50 rounded-lg border border-green-100">
+                    <CheckCircle2 className="text-green-600 flex-shrink-0 mt-0.5" size={20} />
+                    <div>
+                      <p className="font-semibold text-green-800">Confirmation Email Sent</p>
+                      <p className="text-xs text-green-700 mt-1">We've sent details to {orderData.customerEmail}</p>
+                      {orderData.emailSentAt && (
+                        <p className="text-xs text-green-700 mt-2">Sent at: {new Date(orderData.emailSentAt).toLocaleString()}</p>
+                      )}
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="flex items-start gap-3 p-4 bg-yellow-50 rounded-lg border border-yellow-100">
+                    <CheckCircle2 className="text-yellow-600 flex-shrink-0 mt-0.5" size={20} />
+                    <div>
+                      <p className="font-semibold text-yellow-800">Email Not Sent</p>
+                      <p className="text-xs text-yellow-700 mt-1">We couldn't send the email, but your order is saved. We'll contact you via WhatsApp.</p>
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Status Badge */}
@@ -186,8 +196,14 @@ function SuccessContent() {
                   2
                 </div>
                 <div>
-                  <p className="font-semibold text-foreground">Email Confirmation Received</p>
-                  <p className="text-sm text-muted-foreground mt-1">Check your email ({orderData?.customerEmail}) for order confirmation with all details</p>
+                  <p className="font-semibold text-foreground">
+                    {orderData?.emailSent ? 'Email Confirmation Received' : 'Email Confirmation Pending'}
+                  </p>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    {orderData?.emailSent
+                      ? `Check your email (${orderData?.customerEmail}) for order confirmation with all details`
+                      : 'If you did not receive an email, don\'t worry. We\'ll still contact you on WhatsApp.'}
+                  </p>
                 </div>
               </li>
               <li className="flex gap-4">

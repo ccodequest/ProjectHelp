@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Header } from '@/components/header';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { StickmanLoader } from '@/components/ui/stickman-loader';
 import { Download, Trash2, RefreshCw, Eye, Package, Mail, Phone, Calendar, User } from 'lucide-react';
 
 interface Order {
@@ -122,7 +123,12 @@ export default function AdminOrdersPage() {
         </div>
 
         {/* Loading State */}
-        {loading && <p className="text-center text-muted-foreground py-8">Loading orders...</p>}
+        {loading && (
+          <div className="flex items-center justify-center gap-3 text-muted-foreground py-8">
+            <StickmanLoader size={24} />
+            <span>Loading orders...</span>
+          </div>
+        )}
 
         {/* Orders List */}
         {!loading && orders.length === 0 ? (

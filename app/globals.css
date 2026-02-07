@@ -174,6 +174,42 @@
   }
 }
 
+@keyframes stickman-bob {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes stickman-arm-swing {
+  0%, 100% {
+    transform: rotate(20deg);
+  }
+  50% {
+    transform: rotate(-20deg);
+  }
+}
+
+@keyframes stickman-leg-walk-left {
+  0%, 100% {
+    transform: rotate(20deg);
+  }
+  50% {
+    transform: rotate(-20deg);
+  }
+}
+
+@keyframes stickman-leg-walk-right {
+  0%, 100% {
+    transform: rotate(-20deg);
+  }
+  50% {
+    transform: rotate(20deg);
+  }
+}
+
 @layer utilities {
   .animate-float {
     animation: float 3s ease-in-out infinite;
@@ -209,5 +245,76 @@
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .stickman-loader {
+    --stickman-size: 28px;
+    width: var(--stickman-size);
+    height: var(--stickman-size);
+    position: relative;
+    display: inline-block;
+    color: currentColor;
+  }
+
+  .stickman-head {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    transform: translateX(-50%);
+    animation: stickman-bob 0.9s ease-in-out infinite;
+  }
+
+  .stickman-body {
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    width: 2px;
+    height: 10px;
+    background: currentColor;
+    transform: translateX(-50%);
+  }
+
+  .stickman-arm {
+    position: absolute;
+    top: 10px;
+    width: 8px;
+    height: 2px;
+    background: currentColor;
+    transform-origin: left center;
+    animation: stickman-arm-swing 0.7s ease-in-out infinite;
+  }
+
+  .stickman-arm-left {
+    left: calc(50% - 8px);
+  }
+
+  .stickman-arm-right {
+    left: 50%;
+    transform-origin: right center;
+    animation-delay: 0.1s;
+  }
+
+  .stickman-leg {
+    position: absolute;
+    top: 18px;
+    width: 9px;
+    height: 2px;
+    background: currentColor;
+    transform-origin: left center;
+  }
+
+  .stickman-leg-left {
+    left: calc(50% - 8px);
+    animation: stickman-leg-walk-left 0.7s ease-in-out infinite;
+  }
+
+  .stickman-leg-right {
+    left: 50%;
+    transform-origin: right center;
+    animation: stickman-leg-walk-right 0.7s ease-in-out infinite;
   }
 }
